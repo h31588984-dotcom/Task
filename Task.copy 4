@@ -1,0 +1,84 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+struct Person
+{
+    string name;
+    int age;
+};
+
+int main()
+{
+    int n;
+    cout << "Enter number of persons: ";
+    cin >> n;
+    cin.ignore();
+
+    ofstream file("persons.txt");
+
+    for (int i = 0; i < n; i++)
+    {
+        Person p;
+
+        cout << "Enter name: ";
+        getline(cin, p.name);
+
+        cout << "Enter age: ";
+        cin >> p.age;
+        cin.ignore();
+
+        file << p.name << endl;
+        file << p.age << endl;
+    }
+
+    file.close();
+
+    vector<Person> persons;
+
+    ifstream in("persons.txt");
+
+    Person p;
+
+    while (getline(in, p.name))
+    {
+        in >> p.age;
+        in.ignore();
+
+        persons.push_back(p);
+    }
+
+    in.close();
+
+    if (persons.empty())
+        return 0;
+
+    auto youngest = min_element(persons.begin(), persons.end(),
+        [](Person a, Person b)
+        {
+            return a.age < b.age;
+        });
+
+    auto oldest = max_element(persons.begin(), persons.end(),
+        [](Person a, Person b)
+        {
+            return a.age < b.age;
+        });
+
+    ofstream out("results.txt");
+
+    out << "Youngest Person: "
+        << youngest->name << " "
+        << youngest->age << endl;
+
+    out << "Oldest Person: "
+        << oldest->name << " "
+        << oldest->age << endl;
+
+    out.close();
+
+    return 0;
+}
