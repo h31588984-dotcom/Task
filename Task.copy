@@ -1,0 +1,29 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string name, id, grade;
+
+    cout << "Enter Full Name: ";
+    getline(cin, name);
+
+    cout << "Enter ID: ";
+    getline(cin, id);
+
+    cout << "Enter Grade: ";
+    getline(cin, grade);
+
+    ofstream myfile;
+    myfile.open("Student.txt");
+
+    myfile << "Full Name: " << name << endl;
+    myfile << "ID: " << id << endl;
+    myfile << "Grade: " << grade << endl;
+
+    myfile.close();
+
+    return 0;
+}
