@@ -1,0 +1,26 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    ofstream file("welcome.txt");
+    file << "Hello Everybody";
+    file.close();
+
+    ifstream in("welcome.txt");
+    string text;
+    getline(in, text);
+    in.close();
+
+    size_t pos = text.find("body");
+    if (pos != string::npos)
+        text.replace(pos, 4, "one");
+
+    ofstream out("welcome.txt", ios::trunc);
+    out << text;
+    out.close();
+
+    return 0;
+}
